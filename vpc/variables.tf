@@ -18,14 +18,12 @@ variable "vpc_cidr" {
 variable "multi_az" {
   description = "Boolean value: write true if you want a subnet for each Availability Zone; Write false if you want a single Availability Zone with one subnet."
   type        = bool
-  #  default     = false
 }
 
 
 variable "nat_gateway_provisioning" {
   description = "if 'single' = 1 NAT Gateway; if 'multi' = 1 NAT per each Availability Zones"
   type        = string
-  #   default     = "single"
   validation {
     condition     = contains(["single", "multi"], var.nat_gateway_provisioning)
     error_message = "nat_gateway_provisioning accepted value must be 'single' or 'multi'."
