@@ -1,0 +1,5 @@
+.*
+.terraform/
+!.gitignore
+!.github/
+vpc/.*
