@@ -25,7 +25,7 @@ variable "multi_az" {
 variable "nat_gateway_provisioning" {
   description = "if 'single' = 1 NAT Gateway; if 'multi' = 1 NAT per each Availability Zones"
   type        = string
-  default     = "single"
+  #   default     = "single"
   validation {
     condition     = contains(["single", "multi"], var.nat_gateway_provisioning)
     error_message = "nat_gateway_provisioning accepted value must be 'single' or 'multi'."
