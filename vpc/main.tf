@@ -3,18 +3,14 @@ data "aws_availability_zones" "zones" {
 }
 
 locals {
-  # Use 1 AZ if single-AZ, otherwise use first 3 AZs
+  # Use 1 AZ if single, use 3 AZs if multi
   azs = var.multi_az ? slice(data.aws_availability_zones.zones.names, 0, 3) : slice(data.aws_availability_zones.zones.names, 0, 1)
-
   # Availability Zones map
   az_map = { for idx, az in local.azs : az => { index = idx } }
-
   # Public subnets cidr /24s
   public_cidr = { for az, o in local.az_map : az => cidrsubnet(var.vpc_cidr, 8, 200 + o.index) }
-
   # Private subnets cidr /19s
   private_cidr = { for az, o in local.az_map : az => cidrsubnet(var.vpc_cidr, 3, o.index) }
-
   common_tags = merge({
     "Company" = var.Company,
   }, var.tags)
@@ -64,7 +60,6 @@ resource "aws_route_table_association" "public-rtb-assoc" {
   subnet_id      = each.value.id
   route_table_id = aws_route_table.public-rtb.id
 }
-
 
 
 ### NAT Gateways and EIP
