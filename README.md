@@ -28,6 +28,29 @@ Configurable subnets:
    - multi: 1 NAT Gateway per each AZs
 
 
+# Note:
+
+to no overlap, public cidr start with an index 200 (var.vpc_cidr, 8, 200 + i)
+```
+Public Subnets (/24)
+
+AZ    index    cidr
+AZa   200      X.X.200.0/24
+AZb   201      X.X.201.0/24
+AZc   202      X.X.202.0/24
+```
+
+instead the private subnets start with an index of 0 (var.vpc_cidr, 3, o.index)
+```
+Subnet Private (/19)
+
+AZ    index    cidr
+AZa   0        X.X.0.0/19
+AZb   1        X.X.32.0/19
+AZc   2        X.X.64.0/19
+```
+
+
 # Inputs
 
 Variable, Type, Default, Description
